@@ -1,0 +1,21 @@
+const express = require('express')
+const { getAllUsers, getUser , register ,login, updateUser, deleteUser ,getMe ,searchUsers, changePassword, becomeStreamer } = require('../controllers/userController.cjs')
+const userRoutes = express.Router()
+const authentication = require("../middleware/authenticationMiddleware.cjs")
+const upload = require("../middleware/uploadMiddleware.cjs")
+const { googleAuth } =  require("../controllers/googleAuthController")
+
+    userRoutes.post("/google", googleAuth)
+    userRoutes.get("/search", authentication, searchUsers)
+    userRoutes.patch("/become-streamer", authentication, becomeStreamer)
+    userRoutes.patch("/update", authentication, upload.single("avatar"), updateUser)
+    userRoutes.get('/',getAllUsers)
+    userRoutes.get('/me',getMe)
+    userRoutes.get('/:id',getUser)
+    userRoutes.post('/register',register)
+    userRoutes.patch("/changepassword", authentication, changePassword)
+    userRoutes.post('/login',login)
+    userRoutes.patch('/:id',updateUser)
+    userRoutes.delete('/:id',deleteUser)
+
+module.exports = userRoutes
