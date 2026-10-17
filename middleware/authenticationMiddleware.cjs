@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken')
 const USER = require('../model/userModel.cjs')
+const dotenv = require('dotenv')
+dotenv.config()
 
 const authentication = async (req, res, next) => {
     try {
@@ -13,7 +15,7 @@ const authentication = async (req, res, next) => {
         let verifyToken
 
         try {
-            verifyToken = jwt.verify(splitToken, "8dF#vL2@qX9!nR5$zK1^Wp7&Me3*Yt0!Hs6%Bc8@Jf4#Lm9")
+            verifyToken = jwt.verify(token, process.env.JSON_SECRET_KEY)
         } catch (error) {
             console.log(error)
             return res.status(400).json({ messege: "Token Verification Failed." })
