@@ -15,7 +15,7 @@ const authentication = async (req, res, next) => {
         let verifyToken
 
         try {
-            verifyToken = jwt.verify(token, process.env.JSON_SECRET_KEY)
+            verifyToken = jwt.verify(splitToken, process.env.JSON_SECRET_KEY)
         } catch (error) {
             console.log(error)
             return res.status(400).json({ messege: "Token Verification Failed." })
